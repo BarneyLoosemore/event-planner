@@ -1,5 +1,5 @@
+import { Comp } from "@/app/_components/comp";
 import { render, screen } from "@testing-library/react";
-import { Comp } from "../_components/comp";
 
 it("renders", () => {
   render(<Comp />);
