@@ -1,7 +1,3 @@
 export default function Home() {
-  return (
-    <main>
-      <h1>Event Planner</h1>
-    </main>
-  );
+  return <h2>Event Planner</h2>;
 }

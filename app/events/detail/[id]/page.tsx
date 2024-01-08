@@ -3,11 +3,7 @@ export default function EventDetailPage({
 }: {
   params: { id: string };
 }) {
-  return (
-    <main>
-      <h1>Event {id}</h1>
-    </main>
-  );
+  return <h2>Event {id}</h2>;
 }
 
 // export const generateStaticParams = async () => {};
