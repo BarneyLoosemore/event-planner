@@ -11,6 +11,14 @@ const config: Config = {
   testEnvironment: "jsdom",
   clearMocks: true,
   collectCoverage: true,
+  coverageReporters: ["json", "lcov", "text", "clover"],
+  coverageThreshold: {
+    global: {
+      branches: 90,
+      functions: 90,
+      lines: 90,
+    },
+  },
 };
 
 export default createJestConfig(config);
