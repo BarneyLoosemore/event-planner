@@ -15,3 +15,21 @@ describe("Navigation", () => {
     cy.get("h1").should("contain", "Event 1");
   });
 });
+
+describe("Header", () => {
+  it("should display a header on the home page with links to '/events' and '/events/create'", () => {
+    cy.visit("/");
+    cy.get("header > h1").should("contain", "Event Planner");
+    const eventsLink = cy.get("header nav a").first();
+    eventsLink.should("contain", "Events");
+    eventsLink.click();
+
+    cy.url().should("include", "/events");
+
+    const createEventLink = cy.get("header nav a").last();
+    createEventLink.should("contain", "Create Event");
+    createEventLink.click();
+
+    cy.url().should("include", "/events/create");
+  });
+});
