@@ -1,4 +1,4 @@
-import EventDetailPage from "@/app/events/detail/[id]/page";
+import EventDetailPage from "@/app/events/[id]/page";
 
 import { render, screen } from "@testing-library/react";
 

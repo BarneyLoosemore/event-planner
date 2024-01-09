@@ -10,6 +10,7 @@
     "test:watch": "jest --watch",
     "lint": "next lint",
     "prettier": "prettier --write .",
+    "tsc": "tsc",
     "prepare": "husky install",
     "cypress:open": "cypress open"
   },
