@@ -16,7 +16,7 @@ describe("Navigation", () => {
 
   it('should display a dynamic page for an event at "/events/:id"', () => {
     // TODO: seed test database with an event
-    cy.visit("/events/detail/1");
+    cy.visit("/events/1");
     cy.get("h2").should("contain", "Event 1");
   });
 });
@@ -85,7 +85,7 @@ describe("Create New Event Page", () => {
 
     submitButton.should("be.disabled");
 
-    const nameInput = cy.contains("input", "Name");
+    const titleInput = cy.contains("input", "Title");
     const descriptionInput = cy.contains(
       "input[type='textarea']",
       "Description",
@@ -93,7 +93,7 @@ describe("Create New Event Page", () => {
     const locationInput = cy.contains("input", "Location"); // TODO: make this a map selector or dropdown???
     const dateInput = cy.contains("input[type='date']", "Date");
 
-    nameInput.type("Test Event");
+    titleInput.type("Test Event");
     descriptionInput.type("Some Test Event Description");
     locationInput.type("Test Location");
     dateInput.type("2024-12-31");

@@ -1,6 +1,6 @@
 {
   "id": 1,
-  "name": "Fun Event!",
+  "title": "Fun Event!",
   "image": {
     "url": "http://www.example.com/image.jpg"
   },

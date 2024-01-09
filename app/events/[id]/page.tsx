@@ -1,9 +1,10 @@
 export default function EventDetailPage({
-  params: { id },
+  params,
 }: {
   params: { id: string };
 }) {
-  return <h2>Event {id}</h2>;
+  // TODO: replace with db call
+  return <h2>Event {params.id}</h2>;
 }
 
 // export const generateStaticParams = async () => {};

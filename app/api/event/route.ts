@@ -1,8 +1,10 @@
-export async function POST(request: Request): Promise<Response> {
-  const body = await request.json();
-  console.log(body);
+export async function POST(request: Request) {
+  const body = await request.formData();
 
-  return new Response(JSON.stringify({ message: "OK" }), {
+  // TODO: handle db insert
+  // const event = Object.fromEntries(body.entries());
+
+  return new Response("OK", {
     headers: { "content-type": "application/json" },
   });
 }
