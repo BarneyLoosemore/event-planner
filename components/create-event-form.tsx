@@ -4,25 +4,32 @@ import { FormEvent, useState } from "react";
 
 export const CreateEventForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isError, setIsError] = useState(false);
+
   const router = useRouter();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    // TODO: check if form is submitting
+    try {
+      setIsSubmitting(true);
+      event.preventDefault();
 
-    setIsSubmitting(true);
-    event.preventDefault();
+      const response = await fetch("/api/event", {
+        method: "POST",
+        body: new FormData(event.currentTarget),
+      });
 
-    const response = await fetch("/api/event", {
-      method: "POST",
-      body: new FormData(event.currentTarget),
-      redirect: "follow",
-    });
-    if (!response.ok) {
-      throw new Error(response.statusText);
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+
+      const data = await response.json();
+      router.push(`/events/${data.id}`);
+    } catch (e) {
+      console.warn(e);
+      setIsError(true);
+    } finally {
+      setIsSubmitting(false);
     }
-
-    const data = await response.json();
-    router.push(`/events/${data.id}`);
   };
 
   return (
@@ -42,12 +49,29 @@ export const CreateEventForm = () => {
       <label htmlFor="date">Date</label>
       <input name="date" id="date" type="date" required />
 
+      {/* <label htmlFor="image">Image</label>
+      <input
+        name="image"
+        id="image"
+        type="file"
+        accept="image/png, image/jpeg, image/jpg, image/webp"
+        className="!text-white"
+        max="1"
+        required
+      /> */}
+
       <button
         type="submit"
         className="disabled:cursor-not-allowed disabled:opacity-50"
+        disabled={isSubmitting}
       >
         Create
       </button>
+      {isError && (
+        <p className="text-red-800" role="alert">
+          Something went wrong :(
+        </p>
+      )}
     </form>
   );
 };

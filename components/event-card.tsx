@@ -12,6 +12,6 @@ export const EventCard = ({
     {/* <Image src={image} alt={title} width={500} height={500} /> */}
     <p>{description.slice(0, 10)}...</p>
     <p>{location}</p>
-    <p>{date.toUTCString()}</p>
+    <p>{date.toDateString()}</p>
   </article>
 );
