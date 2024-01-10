@@ -2,14 +2,14 @@ import { EventCard } from "@/components/event-card";
 import { Event } from "@prisma/client";
 import { render, screen, within } from "@testing-library/react";
 
-const mockEvent: Event = {
+const mockEvent = {
   id: "1",
   title: "Test Event",
   description: "A Lovely Test Event!",
   // image: "/test.jpg",
   location: "Test Location",
   date: new Date("01/01/2025"),
-};
+} as Event;
 
 describe("<EventCard>", () => {
   it("should render with title, date, image and location", () => {
