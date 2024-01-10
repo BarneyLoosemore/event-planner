@@ -1,5 +1,6 @@
+import type { Event } from "@prisma/client";
 import Link from "next/link";
-import { Event, EventCard } from "./event-card";
+import { EventCard } from "./event-card";
 
 type EventCardListProps = {
   events: Event[];
