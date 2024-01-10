@@ -1,4 +1,5 @@
 import { EventCardList } from "@/components/event-card-list";
+import { Event } from "@prisma/client";
 import { render, screen, within } from "@testing-library/react";
 
 const mockEvents = [
@@ -6,27 +7,27 @@ const mockEvents = [
     id: "1",
     title: "Test Event 1",
     description: "Some Test Event Description",
-    image: "/test1.jpg",
+    // image: "/test1.jpg",
     location: "Test Location 1",
-    date: "01/01/2025",
+    date: new Date("01/01/2025"),
   },
   {
     id: "2",
     title: "Test Event 2",
     description: "Test Event Description",
-    image: "/test2.jpg",
+    // image: "/test2.jpg",
     location: "Test Location 2",
-    date: "02/02/2025",
+    date: new Date("02/02/2025"),
   },
   {
     id: "3",
     title: "Test Event 3",
     description: "Test Event Description",
-    image: "/test3.jpg",
+    // image: "/test3.jpg",
     location: "Test Location 3",
-    date: "03/03/2025",
+    date: new Date("03/03/2025"),
   },
-];
+] as Event[];
 
 describe("<EventCardList>", () => {
   it("should render a list of event cards when provided with a list of events", () => {

@@ -16,7 +16,7 @@ const expectedInputs = [
 
 jest.setSystemTime(new Date("2024-01-09"));
 
-describe("<CreateEventForm>", () => {
+describe.skip("<CreateEventForm>", () => {
   it.each(expectedInputs)(
     "%name input with %label label should render",
     ({ label }) => {

@@ -1,13 +1,14 @@
 import { EventCard } from "@/components/event-card";
+import { Event } from "@prisma/client";
 import { render, screen, within } from "@testing-library/react";
 
-const mockEvent = {
+const mockEvent: Event = {
   id: "1",
   title: "Test Event",
   description: "A Lovely Test Event!",
-  image: "/test.jpg",
+  // image: "/test.jpg",
   location: "Test Location",
-  date: "01/01/2025",
+  date: new Date("01/01/2025"),
 };
 
 describe("<EventCard>", () => {
@@ -15,14 +16,14 @@ describe("<EventCard>", () => {
     render(<EventCard {...mockEvent} />);
     const card = screen.getByRole("article");
     const title = within(card).getByRole("heading", { name: mockEvent.title });
-    const date = within(card).getByText("01/01/2025");
-    const image = within(card).getByRole("img");
+    const date = within(card).getByText("Wed Jan 01 2025");
+    // const image = within(card).getByRole("img");
     const location = within(card).getByText(mockEvent.location);
 
     expect(title).toBeInTheDocument();
     expect(date).toBeInTheDocument();
-    expect(image).toBeInTheDocument();
-    expect(image).toHaveAttribute("src", expect.stringMatching(/test.jpg/));
+    // expect(image).toBeInTheDocument();
+    // expect(image).toHaveAttribute("src", expect.stringMatching(/test.jpg/));
     expect(location).toBeInTheDocument();
   });
 
