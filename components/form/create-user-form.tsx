@@ -5,7 +5,10 @@ import { SubmitButton } from "./submit-button";
 
 export const CreateUserForm = async () => {
   return (
-    <form action={startSession} className="flex flex-col items-center">
+    <form
+      action={startSession}
+      className="mx-auto mt-8 flex w-full max-w-xs flex-col sm:mt-16 [&>input]:text-black [&>textarea]:text-black"
+    >
       <Field label="What's your name?" name="name" required />
       <SubmitButton>Submit</SubmitButton>
     </form>

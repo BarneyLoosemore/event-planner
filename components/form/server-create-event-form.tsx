@@ -9,7 +9,7 @@ export const ServerCreateEventForm = () => {
   return (
     <form
       action={createEvent}
-      className="flex flex-col gap-4 w-1/3 [&>input]:text-black [&>textarea]:text-black"
+      className="flex w-full max-w-xs flex-col [&>input]:text-black [&>textarea]:text-black"
     >
       <Field label="Title" name="title" required />
       <Field label="Description" name="description" required />

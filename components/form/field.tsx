@@ -18,13 +18,17 @@ export const Field = ({
   const { pending } = useFormStatus();
   return (
     <>
-      <label htmlFor={name}>{label}</label>
+      <label htmlFor={name} className="font-light">
+        {label}
+      </label>
       <input
         name={name}
         id={name}
         type={type}
         required={required}
-        className={pending ? "opacity-50 cursor-not-allowed" : ""}
+        className={`${
+          pending && "opacity-lg cursor-not-allowed"
+        } mb-4 rounded-sm px-4 py-2 shadow-sm shadow-slate-200`}
         disabled={pending}
         {...rest}
       />

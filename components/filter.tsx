@@ -13,7 +13,7 @@ export const Filter = ({
 }) => (
   <Link
     href={href}
-    className={`bg-gray-300 rounded-md px-6 py-2 text-xs sm:text-md ${
+    className={`sm:text-md rounded-md bg-gray-300 px-6 py-2 text-xs font-light ${
       active && "bg-slate-700 text-white"
     }`}
   >
