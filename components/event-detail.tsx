@@ -26,6 +26,7 @@ export const EventDetail = async ({ id }: { id: string }) => {
     description,
     location,
     date,
+    image,
     creator: host,
   } = await getEventById(id);
   const attendees = await getAttendeesByEventId(id);
@@ -42,12 +43,10 @@ export const EventDetail = async ({ id }: { id: string }) => {
       <div className="mb-4 flex flex-col gap-4 border-b-2 border-b-slate-700 pb-4 sm:mb-6 sm:flex-row sm:gap-10 sm:border-0">
         <Image
           alt={title}
-          src={`https://picsum.photos/id/${Math.floor(
-            Math.random() * 100,
-          )}/600/300`}
+          src={image!}
           width={600}
           height={300}
-          className="max-sm:relative max-sm:left-1/2 max-sm:right-1/2 max-sm:z-[-1] max-sm:ml-[-50vw] max-sm:mr-[-50vw] max-sm:w-[100vw] max-sm:max-w-[100vw]" // stretch out of the parent container, but only on small screens
+          className="max-sm:relative max-sm:left-1/2 max-sm:right-1/2 max-sm:z-[-1] max-sm:ml-[-50vw] max-sm:mr-[-50vw] max-sm:w-[100vw] max-sm:max-w-[100vw] sm:rounded-md" // stretch out of the parent container, but only on small screens
         />
         <div>
           <h2 className="text-xl font-semibold sm:text-2xl">{title}</h2>

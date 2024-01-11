@@ -38,28 +38,30 @@ const createEvent = async (user: User) => {
       description: DESCRIPTION,
       location,
       title,
+      image: `https://picsum.photos/id/${Math.floor(
+        Math.random() * 50,
+      )}/600/300`,
     },
   });
 };
 
 const createAttendance = async (user: User, event: Event) => {
-  try {
-    await prisma.eventAttendance.upsert({
-      where: {
-        eventId_attendeeId: {
-          attendeeId: user.id,
-          eventId: event.id,
-        },
-      },
-      update: {},
-      create: {
+  await prisma.eventAttendance.upsert({
+    where: {
+      eventId_attendeeId: {
         attendeeId: user.id,
         eventId: event.id,
       },
-    });
-  } catch (e) {
-    console.error(e);
-  }
+    },
+    update: {
+      attendeeId: user.id,
+      eventId: event.id,
+    },
+    create: {
+      attendeeId: user.id,
+      eventId: event.id,
+    },
+  });
 };
 
 const createEvents = async (count: number, users: User[]) =>

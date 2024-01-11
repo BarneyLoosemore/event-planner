@@ -11,21 +11,17 @@ export const ServerCreateEventForm = () => {
       action={createEvent}
       className="flex w-full max-w-xs flex-col [&>input]:text-black [&>textarea]:text-black"
     >
-      <Field label="Title" name="title" required />
-      <Field label="Description" name="description" required />
-      <Field label="Location" name="location" required />
-      <Field label="Date" name="date" type="date" min={currentDate} required />
-
-      {/* <label htmlFor="image">Image</label>
-      <input
-        name="image"
-        id="image"
-        type="file"
-        accept="image/png, image/jpeg, image/jpg, image/webp"
-        className="!text-white"
-        max="1"
+      <Field label="Title *" name="title" required />
+      <Field label="Description *" name="description" required />
+      <Field label="Location *" name="location" required />
+      <Field
+        label="Date *"
+        name="date"
+        type="date"
+        min={currentDate}
         required
-      /> */}
+      />
+      <Field label="Image" name="image" type="file" accept="image/*" />
 
       <SubmitButton>Create Event</SubmitButton>
     </form>

@@ -18,6 +18,7 @@ model Event {
   location    String
   description String
   attendees   EventAttendance[]
+  image       String?
 }
 
 model EventAttendance {
