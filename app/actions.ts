@@ -29,12 +29,17 @@ export async function createEvent(formData: FormData) {
 }
 
 export async function attendEvent(eventId: string, _: FormData) {
-  await addAttendee(getSessionCookie(), eventId);
+  const sessionCookie = getSessionCookie();
+  if (!sessionCookie) {
+    redirect("/");
+  }
+  await addAttendee(sessionCookie, eventId);
   revalidatePath(`/events/${eventId}`);
 }
 
 export async function leaveEvent(eventId: string, _: FormData) {
-  await removeAttendee(getSessionCookie(), eventId);
+  const sessionCookie = getSessionCookie();
+  await removeAttendee(sessionCookie, eventId);
   revalidatePath(`/events/${eventId}`);
 }
 

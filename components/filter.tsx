@@ -1,3 +1,4 @@
+import { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
 import { ReactNode } from "react";
 
@@ -6,7 +7,7 @@ export const Filter = ({
   active,
   children,
 }: {
-  href: string;
+  href: Url;
   active: boolean;
   children: ReactNode;
 }) => (

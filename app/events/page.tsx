@@ -10,7 +10,17 @@ const getOpts = (sort?: "asc" | "past") => {
       [sort === "past" ? "lt" : "gte"]: new Date(),
     },
   };
-  return { orderBy, where };
+  return {
+    orderBy,
+    where,
+    include: {
+      attendees: {
+        include: {
+          attendee: true,
+        },
+      },
+    },
+  };
 };
 
 export default async function EventsPage({
@@ -29,10 +39,22 @@ export default async function EventsPage({
         <Filter href="/events" active={!sort}>
           Newly added
         </Filter>
-        <Filter href="/events?sort=asc" active={sort === "asc"}>
+        <Filter
+          href={{
+            pathname: "/events",
+            query: { sort: "asc" },
+          }}
+          active={sort === "asc"}
+        >
           Upcoming
         </Filter>
-        <Filter href="/events?sort=past" active={sort === "past"}>
+        <Filter
+          href={{
+            pathname: "/events",
+            query: { sort: "past" },
+          }}
+          active={sort === "past"}
+        >
           Past
         </Filter>
       </search>

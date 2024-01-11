@@ -6,15 +6,15 @@ const locations = ["London", "Paris", "New York", "Berlin", "Tokyo", "Beijing"];
 const titles = [
   "Crazy Event",
   "Eventy Opening Party",
-  "Eventy Launch",
-  "Eventy After Party",
-  "Friday Drinks",
+  // "Eventy Launch",
+  // "Eventy After Party",
+  // "Friday Drinks",
 ];
 const description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
 
 const main = async () => {
-  for (const date of dates) {
-    for (const location of locations) {
+  for (const date of [2024, 2001]) {
+    for (const location of locations.slice(0, 1)) {
       for (const title of titles) {
         await prisma.event.create({
           data: {
