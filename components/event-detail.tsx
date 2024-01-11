@@ -30,6 +30,7 @@ export const EventDetail = async ({ id }: { id: string }) => {
   } = await getEventById(id);
   const attendees = await getAttendeesByEventId(id);
   const isAttending = await isAttendingEvent(id);
+  const isPastEvent = new Date(date) < new Date();
 
   const attendeesConcatenated =
     attendees.length > 0
@@ -53,7 +54,11 @@ export const EventDetail = async ({ id }: { id: string }) => {
           <h3 className="mb-4 text-gray-700" aria-label="Hosted by">
             {host.name}
           </h3>
-          <AttendanceForm eventId={id} isAttending={isAttending} />
+          <AttendanceForm
+            eventId={id}
+            isAttending={isAttending}
+            isPastEvent={isPastEvent}
+          />
           <Detail icon="calendar" title="Date" content={date.toDateString()} />
           <Detail icon="location" title="Location" content={location} />
           <Detail

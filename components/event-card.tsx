@@ -24,11 +24,11 @@ export const EventCard = ({
   date,
   attendees,
 }: EventCardProps) => {
-  const pastEvent = date < new Date();
+  const isPastEvent = date < new Date();
   return (
     <article
       className={`${
-        pastEvent && "opacity-70 hover:opacity-60"
+        isPastEvent && "opacity-70 hover:opacity-60"
       } rounded-md bg-slate-800 px-6 py-4 text-white hover:opacity-90`}
     >
       <h2>{title}</h2>
