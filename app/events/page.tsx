@@ -1,46 +1,41 @@
 import { EventCardList } from "@/components/event-card-list";
+import { Filter } from "@/components/filter";
 import prisma from "@/lib/prisma";
-import Link from "next/link";
+
+const getOpts = (sort?: "asc" | "past") => {
+  const orderBy =
+    sort === "asc" ? { date: "asc" as const } : { createdAt: "desc" as const };
+  const where = {
+    date: {
+      [sort === "past" ? "lt" : "gte"]: new Date(),
+    },
+  };
+  return { orderBy, where };
+};
 
 export default async function EventsPage({
-  searchParams: { order },
+  searchParams: { sort },
 }: {
   searchParams: {
-    order?: "asc" | "desc";
+    sort?: "asc" | "past";
   };
 }) {
-  const orderBy = order
-    ? {
-        date: order,
-      }
-    : ({
-        createdAt: "desc",
-      } as const);
-  const events = await prisma.event.findMany({
-    orderBy,
-  });
+  const opts = getOpts(sort);
+  const events = await prisma.event.findMany(opts);
 
   return (
     <>
-      <h2>Events</h2>
-      <div className="flex gap-2 my-8">
-        <h3>Sort by:</h3>
-        <Link href="/events" className={!order ? "font-bold" : ""}>
-          Newest
-        </Link>
-        <Link
-          href="/events?order=asc"
-          className={order === "asc" ? "font-bold" : ""}
-        >
+      <search className="flex gap-2 mb-8 mt-2">
+        <Filter href="/events" active={!sort}>
+          Newly added
+        </Filter>
+        <Filter href="/events?sort=asc" active={sort === "asc"}>
           Upcoming
-        </Link>
-        <Link
-          className={order === "desc" ? "font-bold" : ""}
-          href="/events?order=desc"
-        >
-          Furthest away
-        </Link>
-      </div>
+        </Filter>
+        <Filter href="/events?sort=past" active={sort === "past"}>
+          Past
+        </Filter>
+      </search>
       <EventCardList events={events} />
     </>
   );

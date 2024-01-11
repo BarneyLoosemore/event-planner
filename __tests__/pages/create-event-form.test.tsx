@@ -1,4 +1,4 @@
-import { CreateEventForm } from "@/components/create-event-form";
+import { CreateEventForm } from "@/components/form/create-event-form";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 
 const expectedInputs = [

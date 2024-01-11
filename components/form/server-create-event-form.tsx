@@ -1,24 +1,9 @@
 "use client";
 import { createEvent } from "@/app/actions";
-import { ReactNode } from "react";
-import { useFormStatus } from "react-dom";
 import { Field } from "./field";
+import { SubmitButton } from "./submit-button";
 
-const SubmitButton = ({ children }: { children: ReactNode }) => {
-  const { pending } = useFormStatus();
-
-  return (
-    <button
-      type="submit"
-      disabled={pending}
-      className={pending ? "cursor-not-allowed" : ""}
-    >
-      {children}
-    </button>
-  );
-};
-
-export function ServerCreateEventForm() {
+export const ServerCreateEventForm = () => {
   const currentDate = new Date().toISOString().split("T")[0];
 
   return (
@@ -45,4 +30,4 @@ export function ServerCreateEventForm() {
       <SubmitButton>Create Event</SubmitButton>
     </form>
   );
-}
+};

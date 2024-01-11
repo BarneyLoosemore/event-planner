@@ -1,5 +1,29 @@
 import type { Event } from "@prisma/client";
 
+const Calendar = () => (
+  <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none">
+    <path
+      d="M10 13L14 17M14 13L10 17M3 9H21M7 3V5M17 3V5M6.2 21H17.8C18.9201 21 19.4802 21 19.908 20.782C20.2843 20.5903 20.5903 20.2843 20.782 19.908C21 19.4802 21 18.9201 21 17.8V8.2C21 7.07989 21 6.51984 20.782 6.09202C20.5903 5.71569 20.2843 5.40973 19.908 5.21799C19.4802 5 18.9201 5 17.8 5H6.2C5.0799 5 4.51984 5 4.09202 5.21799C3.71569 5.40973 3.40973 5.71569 3.21799 6.09202C3 6.51984 3 7.07989 3 8.2V17.8C3 18.9201 3 19.4802 3.21799 19.908C3.40973 20.2843 3.71569 20.5903 4.09202 20.782C4.51984 21 5.07989 21 6.2 21Z"
+      stroke="white"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+const LocationPin = () => (
+  <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none">
+    <path
+      d="M12 21C15.5 17.4 19 14.1764 19 10.2C19 6.22355 15.866 3 12 3C8.13401 3 5 6.22355 5 10.2C5 14.1764 8.5 17.4 12 21Z"
+      stroke="white"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 export const EventCard = ({
   title,
   // image,
@@ -7,11 +31,17 @@ export const EventCard = ({
   location,
   date,
 }: Event) => (
-  <article className="border-white border-2 p-8">
-    <h3>{title}</h3>
+  <article className="px-6 py-4 bg-slate-800 rounded-md text-white hover:opacity-90">
+    <h2>{title}</h2>
+    <div className="flex gap-2 mt-2 mb-1">
+      <Calendar />
+      <p className="font-thin text-xs">{date.toDateString()}</p>
+    </div>
+    <div className="flex gap-2 mb-2">
+      <LocationPin />
+      <p className="font-thin text-xs">{location}</p>
+    </div>
     {/* <Image src={image} alt={title} width={500} height={500} /> */}
-    <p>{description.slice(0, 10)}...</p>
-    <p>{location}</p>
-    <p>{date.toDateString()}</p>
+    <p className="text-sm">{description.slice(0, 10)}...</p>
   </article>
 );

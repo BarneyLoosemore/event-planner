@@ -1,3 +1,5 @@
+import { CreateAttendeeForm } from "@/components/form/create-attendee-form";
+
 export default function Home() {
-  return <h2>Event Planner</h2>;
+  return <CreateAttendeeForm />;
 }
