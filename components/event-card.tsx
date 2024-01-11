@@ -1,4 +1,4 @@
-import type { Event, User } from "@prisma/client";
+import { EventWithAttendees } from "./event-card-list";
 import { Icon } from "./icon";
 
 type InfoProps = {
@@ -14,11 +14,7 @@ const Info = ({ content, icon, title }: InfoProps) => (
   </div>
 );
 
-type EventCardProps = Event & {
-  attendees: {
-    attendee: User;
-  }[];
-};
+type EventCardProps = EventWithAttendees;
 
 export const EventCard = ({
   title,
@@ -28,8 +24,13 @@ export const EventCard = ({
   date,
   attendees,
 }: EventCardProps) => {
+  const pastEvent = date < new Date();
   return (
-    <article className="rounded-md bg-slate-800 px-6 py-4 text-white hover:opacity-90">
+    <article
+      className={`${
+        pastEvent && "opacity-70 hover:opacity-60"
+      } rounded-md bg-slate-800 px-6 py-4 text-white hover:opacity-90`}
+    >
       <h2>{title}</h2>
       <Info icon="calendar" title="Date" content={date.toDateString()} />
       <Info icon="location" title="Location" content={location} />

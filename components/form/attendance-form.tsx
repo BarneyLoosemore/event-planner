@@ -14,7 +14,7 @@ export const AttendanceForm = async ({
     : attendEvent.bind(null, eventId);
 
   return (
-    <form action={handleToggleAttendance}>
+    <form action={handleToggleAttendance} className="sm:mb-4">
       <button
         type="submit"
         className={`${

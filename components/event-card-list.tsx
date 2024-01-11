@@ -1,9 +1,17 @@
-import type { Event } from "@prisma/client";
+import type { Event, User } from "@prisma/client";
 import Link from "next/link";
 import { EventCard } from "./event-card";
 
+export type EventWithAttendees = Event & {
+  attendees: {
+    eventId: string;
+    attendeeId: string;
+    attendee: User;
+  }[];
+};
+
 type EventCardListProps = {
-  events: Event[];
+  events: EventWithAttendees[];
 };
 
 export const EventCardList = ({ events }: EventCardListProps) => (
