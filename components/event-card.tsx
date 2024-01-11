@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { EventWithAttendees } from "./event-card-list";
 import { Icon } from "./icon";
 
@@ -8,9 +9,9 @@ type InfoProps = {
 };
 
 const Info = ({ content, icon, title }: InfoProps) => (
-  <div className="mb-1 mt-2 flex gap-2">
-    <Icon name={icon} alt={title} className="invert filter" />
-    <p className="text-xs font-thin">{content}</p>
+  <div className="flex gap-2">
+    <Icon name={icon} alt={title} />
+    <p className="text-xs font-light text-slate-800">{content}</p>
   </div>
 );
 
@@ -18,8 +19,7 @@ type EventCardProps = EventWithAttendees;
 
 export const EventCard = ({
   title,
-  // image,
-  description,
+  image,
   location,
   date,
   attendees,
@@ -29,15 +29,19 @@ export const EventCard = ({
     <article
       className={`${
         isPastEvent && "opacity-70 hover:opacity-60"
-      } rounded-md bg-slate-800 px-6 py-4 text-white hover:opacity-90`}
+      } flex flex-col justify-between gap-1`}
     >
-      <h2>{title}</h2>
+      <Image
+        src={image!}
+        alt={title}
+        width={326}
+        height={163}
+        className="w-full rounded-md"
+      />
+      <h2 className="font-medium text-slate-700">{title}</h2>
       <Info icon="calendar" title="Date" content={date.toDateString()} />
       <Info icon="location" title="Location" content={location} />
       <Info icon="user" title="Attendees" content={String(attendees.length)} />
-      {/* <Image src={image} alt={title} width={500} height={500} /> */}
-
-      <p className="text-sm">{description.slice(0, 10)}...</p>
     </article>
   );
 };

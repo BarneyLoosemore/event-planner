@@ -16,7 +16,7 @@ type EventCardListProps = {
 
 export const EventCardList = ({ events }: EventCardListProps) => (
   <section>
-    <ul className="grid grid-cols-1 gap-8 sm:grid-cols-3">
+    <ul className="grid grid-cols-1 gap-y-8 sm:grid-cols-3 sm:gap-x-12 sm:gap-y-16 md:grid-cols-4">
       {events.map((event) => (
         <li key={event.id}>
           <Link href={`/events/${event.id}`}>
