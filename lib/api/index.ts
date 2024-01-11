@@ -5,10 +5,13 @@ import prisma from "../prisma";
 export const getEventById = async (id: string) =>
   (await prisma.event.findUnique({
     where: { id },
+    include: {
+      creator: true,
+    },
   }))!;
 
 export const getAttendeesByEventId = async (id: string) =>
-  await prisma.attendee.findMany({
+  await prisma.user.findMany({
     where: {
       events: {
         some: {
@@ -46,8 +49,8 @@ export const isAttendingEvent = async (eventId: string) => {
   }));
 };
 
-export const createAttendee = async (name: string) =>
-  await prisma.attendee.create({
+export const createUser = async (name: string) =>
+  await prisma.user.create({
     data: {
       name,
     },

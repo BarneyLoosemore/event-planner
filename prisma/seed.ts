@@ -1,36 +1,92 @@
-import { PrismaClient } from "@prisma/client";
+import { Event, PrismaClient, User } from "@prisma/client";
 const prisma = new PrismaClient();
 
-const dates = [2021, 2022, 2023, 2024, 1999, 2000, 2001];
-const locations = ["London", "Paris", "New York", "Berlin", "Tokyo", "Beijing"];
-const titles = [
+const EVENT_COUNT = 100;
+const USER_COUNT = 10;
+const EVENT_ATTENDANCES_COUNT = 100;
+
+const USER_NAMES = ["Bob", "Barney", "Xavier", "Sola", "Tilly", "Rosa"];
+const DATES = [2021, 2022, 2023, 2024, 1999, 2000, 2001];
+const LOCATIONS = ["London", "Paris", "New York", "Berlin", "Tokyo", "Beijing"];
+const TITLES = [
   "Crazy Event",
   "Eventy Opening Party",
-  // "Eventy Launch",
-  // "Eventy After Party",
-  // "Friday Drinks",
+  "Eventy Launch",
+  "Eventy After Party",
+  "Friday Drinks",
 ];
-const description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+const DESCRIPTION =
+  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+
+const pickRandom = (arr: any[]) => arr[Math.floor(Math.random() * arr.length)];
+
+const createUser = async () =>
+  prisma.user.create({
+    data: {
+      name: pickRandom(USER_NAMES),
+    },
+  });
+
+const createEvent = async (user: User) => {
+  const date = pickRandom(DATES);
+  const location = pickRandom(LOCATIONS);
+  const title = pickRandom(TITLES);
+  return prisma.event.create({
+    data: {
+      creatorId: user.id,
+      date: new Date(date, Math.random() * 12 + 1, Math.random() * 28 + 1),
+      description: DESCRIPTION,
+      location,
+      title,
+    },
+  });
+};
+
+const createAttendance = async (user: User, event: Event) => {
+  try {
+    await prisma.eventAttendance.upsert({
+      where: {
+        eventId_attendeeId: {
+          attendeeId: user.id,
+          eventId: event.id,
+        },
+      },
+      update: {},
+      create: {
+        attendeeId: user.id,
+        eventId: event.id,
+      },
+    });
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const createEvents = async (count: number, users: User[]) =>
+  await Promise.all(
+    Array(count)
+      .fill(null)
+      .map(() => createEvent(pickRandom(users))),
+  );
+
+const createUsers = async (count: number) =>
+  await Promise.all(Array(count).fill(null).map(createUser));
+
+const createAttendances = async (
+  count: number,
+  users: User[],
+  events: Event[],
+) =>
+  await Promise.all(
+    Array(count)
+      .fill(null)
+      .map(() => createAttendance(pickRandom(users), pickRandom(events))),
+  );
 
 const main = async () => {
-  for (const date of [2024, 2001]) {
-    for (const location of locations.slice(0, 1)) {
-      for (const title of titles) {
-        await prisma.event.create({
-          data: {
-            date: new Date(
-              date,
-              Math.random() * 12 + 1,
-              Math.random() * 28 + 1,
-            ),
-            description,
-            location,
-            title,
-          },
-        });
-      }
-    }
-  }
+  const users = await createUsers(USER_COUNT);
+  const events = await createEvents(EVENT_COUNT, users);
+  await createAttendances(EVENT_ATTENDANCES_COUNT, users, events);
 };
 
 main()

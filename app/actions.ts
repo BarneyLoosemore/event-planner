@@ -1,7 +1,7 @@
 "use server";
 import {
   addAttendee,
-  createAttendee,
+  createUser,
   getSessionCookie,
   removeAttendee,
 } from "@/lib/api";
@@ -15,11 +15,17 @@ export async function createEvent(formData: FormData) {
   try {
     await new Promise((r) => setTimeout(r, 1000)); // TODO: Remove
 
+    const creatorId = getSessionCookie();
+
+    if (!creatorId) {
+      redirect("/");
+    }
+
     const eventBody = Object.fromEntries(formData.entries());
     const parsedEvent = eventSchema.parse(eventBody);
 
     await prisma.event.create({
-      data: parsedEvent,
+      data: { creatorId, ...parsedEvent },
     });
 
     redirect("/events");
@@ -44,7 +50,7 @@ export async function leaveEvent(eventId: string, _: FormData) {
 }
 
 export async function startSession(formData: FormData) {
-  const attendee = await createAttendee(formData.get("name") as string);
-  cookies().set("session", attendee.id);
+  const user = await createUser(formData.get("name") as string);
+  cookies().set("session", user.id);
   redirect("/events");
 }

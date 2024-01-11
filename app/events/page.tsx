@@ -35,7 +35,7 @@ export default async function EventsPage({
 
   return (
     <>
-      <search className="flex gap-2 mb-8 mt-2">
+      <search className="mb-8 mt-2 flex gap-2">
         <Filter href="/events" active={!sort}>
           Newly added
         </Filter>

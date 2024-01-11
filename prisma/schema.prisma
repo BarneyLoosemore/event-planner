@@ -9,6 +9,8 @@ datasource db {
 
 model Event {
   id          String            @id @default(uuid())
+  creator     User              @relation(fields: [creatorId], references: [id])
+  creatorId   String
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt
   title       String
@@ -19,16 +21,17 @@ model Event {
 }
 
 model EventAttendance {
-  event       Event    @relation(fields: [eventId], references: [id])
-  eventId     String
-  attendee   Attendee @relation(fields: [attendeeId], references: [id])
+  event      Event  @relation(fields: [eventId], references: [id])
+  eventId    String
+  attendee   User   @relation(fields: [attendeeId], references: [id])
   attendeeId String
 
   @@id([eventId, attendeeId])
 }
 
-model Attendee {
-  id     String            @id @default(uuid())
-  name   String
-  events EventAttendance[]
+model User {
+  id            String            @id @default(uuid())
+  name          String
+  events        EventAttendance[]
+  createdEvents Event[]
 }

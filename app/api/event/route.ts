@@ -1,8 +1,16 @@
+import { getSessionCookie } from "@/lib/api";
 import prisma from "@/lib/prisma";
 import { eventSchema } from "@/lib/schemas/event";
 import { revalidateTag } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function POST(request: Request) {
+  const creatorId = getSessionCookie();
+
+  if (!creatorId) {
+    redirect("/");
+  }
+
   const body = await request.formData();
 
   const eventBody = Object.fromEntries(body.entries());
@@ -16,7 +24,7 @@ export async function POST(request: Request) {
   }
 
   const event = await prisma.event.create({
-    data: parsedEvent.data,
+    data: { creatorId, ...parsedEvent.data },
   });
 
   revalidateTag("events");

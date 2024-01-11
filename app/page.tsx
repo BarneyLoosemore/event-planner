@@ -1,5 +1,5 @@
-import { CreateAttendeeForm } from "@/components/form/create-attendee-form";
+import { CreateUserForm } from "@/components/form/create-user-form";
 
 export default function Home() {
-  return <CreateAttendeeForm />;
+  return <CreateUserForm />;
 }
