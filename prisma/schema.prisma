@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,11 +8,27 @@ datasource db {
 }
 
 model Event {
-  id          String   @id @default(uuid())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id          String            @id @default(uuid())
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
   title       String
   date        DateTime
   location    String
   description String
+  attendees   EventAttendance[]
+}
+
+model EventAttendance {
+  event       Event    @relation(fields: [eventId], references: [id])
+  eventId     String
+  attendee   Attendee @relation(fields: [attendeeId], references: [id])
+  attendeeId String
+
+  @@id([eventId, attendeeId])
+}
+
+model Attendee {
+  id     String            @id @default(uuid())
+  name   String
+  events EventAttendance[]
 }
