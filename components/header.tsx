@@ -22,7 +22,6 @@ const NavLink = ({ href, children }: { href: string; children: ReactNode }) => {
 };
 
 export const Header = ({ user }: { user: User | null }) => {
-  console.log(user);
   return (
     <header className="flex justify-between">
       <h1 className="text-xl font-bold text-slate-700 sm:text-3xl">

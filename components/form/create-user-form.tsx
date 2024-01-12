@@ -6,7 +6,6 @@ import { SubmitButton } from "./submit-button";
 
 export const CreateUserForm = () => {
   const [message, formAction] = useFormState(startSession, null);
-  console.log({ message });
   return (
     <form
       action={formAction}
