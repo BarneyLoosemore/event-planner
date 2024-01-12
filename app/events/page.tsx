@@ -4,6 +4,9 @@ import { Suspense } from "react";
 
 export default async function EventsPage() {
   const events = await prisma.event.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
     include: {
       attendees: {
         include: {
