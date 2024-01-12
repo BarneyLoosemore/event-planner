@@ -21,6 +21,10 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+html {
+  overflow-y: scroll;
+}
+
 body,
 html {
   height: 100%;

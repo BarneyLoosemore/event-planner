@@ -39,8 +39,8 @@ export const EventDetail = async ({ id }: { id: string }) => {
       : "No attendees :(";
 
   return (
-    <section>
-      <div className="mb-4 flex flex-col gap-4 border-b-2 border-b-slate-700 pb-4 sm:mb-6 sm:flex-row sm:gap-10 sm:border-0">
+    <section className="m-auto max-w-4xl">
+      <div className="mb-4 flex flex-col gap-4 border-b-2 border-b-slate-700 pb-4 sm:mb-6 sm:mt-8 sm:flex-row sm:gap-10 sm:border-0">
         <Image
           alt={title}
           src={image!}
@@ -53,11 +53,13 @@ export const EventDetail = async ({ id }: { id: string }) => {
           <h3 className="mb-4 text-gray-700" aria-label="Hosted by">
             {host.name}
           </h3>
+
           <AttendanceForm
             eventId={id}
             isAttending={isAttending}
             isPastEvent={isPastEvent}
           />
+
           <Detail icon="calendar" title="Date" content={date.toDateString()} />
           <Detail icon="location" title="Location" content={location} />
           <Detail

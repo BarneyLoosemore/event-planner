@@ -20,12 +20,20 @@ const DESCRIPTION =
 
 const pickRandom = (arr: any[]) => arr[Math.floor(Math.random() * arr.length)];
 
-const createUser = async () =>
-  prisma.user.create({
-    data: {
-      name: pickRandom(USER_NAMES),
+const createUser = async () => {
+  const name = pickRandom(USER_NAMES);
+  return prisma.user.upsert({
+    where: {
+      name,
+    },
+    update: {
+      name,
+    },
+    create: {
+      name,
     },
   });
+};
 
 const createEvent = async (user: User) => {
   const date = pickRandom(DATES);

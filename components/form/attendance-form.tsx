@@ -1,4 +1,3 @@
-"use client";
 import { attendEvent, leaveEvent } from "@/app/events/[id]/actions";
 
 export const AttendanceForm = async ({
