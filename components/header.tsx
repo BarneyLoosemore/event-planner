@@ -1,5 +1,4 @@
 "use client";
-import { User } from "@prisma/client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
@@ -21,7 +20,7 @@ const NavLink = ({ href, children }: { href: string; children: ReactNode }) => {
   );
 };
 
-export const Header = ({ user }: { user: User | null }) => {
+export const Header = () => {
   return (
     <header className="flex justify-between">
       <h1 className="text-xl font-bold text-slate-700 sm:text-3xl">
@@ -31,13 +30,6 @@ export const Header = ({ user }: { user: User | null }) => {
         <ul className="flex gap-4">
           <NavLink href="/events">Events</NavLink>
           <NavLink href="/events/create">Create Event</NavLink>
-          {user ? (
-            <li className="flex items-center">
-              <p className="text-sm text-gray-500 sm:text-lg">{user.name}</p>
-            </li>
-          ) : (
-            <NavLink href="/">Sign Up</NavLink>
-          )}
         </ul>
       </nav>
     </header>
