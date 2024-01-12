@@ -5,16 +5,21 @@ export async function uploadImageToCloudinary(
   image: File,
 ): Promise<UploadApiResponse> {
   const imageBuffer = await image.arrayBuffer();
-  const nodeBuffer = Buffer.from(imageBuffer);
+  const base64 = Buffer.from(imageBuffer).toString("base64");
+  const fileUri = `data:${image.type};base64,${base64}`;
 
   return new Promise((resolve, reject) =>
     cloudinary.v2.uploader
-      .upload_stream((error, res) => {
-        if (error) {
-          reject(error);
-        }
-        resolve(res!);
+      .upload(fileUri, {
+        invalidate: true,
       })
-      .end(nodeBuffer),
+      .then((result) => {
+        console.log(result);
+        resolve(result);
+      })
+      .catch((error) => {
+        console.log(error);
+        reject(error);
+      }),
   );
 }
