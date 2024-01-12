@@ -28,11 +28,11 @@ export const EventCard = ({
   return (
     <article
       className={`${
-        isPastEvent && "opacity-70 hover:opacity-60"
-      } flex flex-col justify-between gap-1`}
+        isPastEvent && "opacity-70"
+      } flex flex-col justify-between gap-1 transition-opacity will-change-auto hover:opacity-75`}
     >
       <Image
-        src={image!}
+        src={image ?? "https://picsum.photos/id/1"}
         alt={title}
         width={326}
         height={163}

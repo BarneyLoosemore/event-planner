@@ -9,9 +9,13 @@ const config: Config = {
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   coverageProvider: "v8",
   testEnvironment: "jsdom",
-  clearMocks: true,
+  resetMocks: true,
   collectCoverage: true,
   coverageReporters: ["json", "lcov", "text", "clover"],
+  moduleNameMapper: {
+    "@/(.*)": "<rootDir>/$1",
+  },
+
   coverageThreshold: {
     global: {
       // branches: 90,

@@ -1,7 +1,9 @@
-import { ReactNode } from "react";
+import { InputHTMLAttributes, ReactNode } from "react";
 import { useFormStatus } from "react-dom";
 
-export const SubmitButton = ({ children }: { children: ReactNode }) => {
+export const SubmitButton = ({
+  children,
+}: { children: ReactNode } & InputHTMLAttributes<HTMLButtonElement>) => {
   const { pending } = useFormStatus();
 
   return (

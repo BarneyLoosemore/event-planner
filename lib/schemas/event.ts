@@ -2,7 +2,7 @@
 import z from "zod";
 
 const FIVE_HUNDRED_KB = 500000;
-const imageSchema = z
+export const imageSchema = z
   .any()
   .refine(
     (file) => file?.size <= FIVE_HUNDRED_KB,
@@ -14,7 +14,8 @@ const imageSchema = z
         file?.type,
       ),
     "Only .jpg, .jpeg, .png and .webp formats are supported.",
-  );
+  )
+  .transform((file) => file as File);
 
 export const eventSchema = z.object({
   title: z.string(),
@@ -27,5 +28,4 @@ export const eventSchema = z.object({
     })
     .transform((date) => new Date(date)),
   location: z.string(),
-  // image: imageSchema,
 });
