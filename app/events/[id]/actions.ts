@@ -3,17 +3,15 @@ import { addAttendee, getSessionCookie, removeAttendee } from "@/lib/api";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export async function attendEvent(eventId: string, _: FormData) {
-  const sessionCookie = getSessionCookie();
-  if (!sessionCookie) {
+export async function toggleAttendEvent(eventId: string, isAttending: boolean) {
+  const userId = getSessionCookie();
+  if (!userId) {
     redirect("/");
   }
-  await addAttendee(sessionCookie, eventId);
-  revalidatePath(`/events/${eventId}`);
-}
 
-export async function leaveEvent(eventId: string, _: FormData) {
-  const sessionCookie = getSessionCookie();
-  await removeAttendee(sessionCookie, eventId);
+  isAttending
+    ? await removeAttendee(userId, eventId)
+    : await addAttendee(userId, eventId);
+
   revalidatePath(`/events/${eventId}`);
 }
