@@ -34,7 +34,7 @@ export const CreateEventForm = () => {
 
   return (
     <form
-      className="flex flex-col gap-4 w-1/3 [&>input]:text-black [&>textarea]:text-black"
+      className="flex w-1/3 flex-col gap-4 [&>input]:text-black [&>textarea]:text-black"
       onSubmit={handleSubmit}
     >
       <label htmlFor="title">Title</label>
