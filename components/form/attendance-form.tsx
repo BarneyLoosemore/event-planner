@@ -14,6 +14,8 @@ export const AttendanceForm = ({
   const [optimisticIsAttendingEvent, optimisticToggleIsAttendingEvent] =
     useOptimistic(isAttending, (_, newIsAttending) => !!newIsAttending);
 
+  const actionSubmittable = optimisticIsAttendingEvent === isAttending;
+
   async function formAction(_: FormData) {
     optimisticToggleIsAttendingEvent(!isAttending);
     toggleAttendEvent(eventId, isAttending);
@@ -30,8 +32,9 @@ export const AttendanceForm = ({
               ? "bg-red-700 hover:bg-red-900"
               : "bg-green-700 hover:bg-green-900"
         }
+        ${!actionSubmittable && "animate-pulse cursor-not-allowed"}
         rounded-md px-6 py-2 text-xs text-white sm:text-lg`}
-        disabled={isPastEvent}
+        disabled={isPastEvent || !actionSubmittable}
       >
         {isPastEvent
           ? "Event has ended"

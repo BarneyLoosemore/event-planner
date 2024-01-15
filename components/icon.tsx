@@ -27,8 +27,10 @@ export const Icon = ({
   <Image
     src={iconPathMap[name]}
     alt={alt}
-    width={width}
-    height={height}
+    style={{
+      width,
+      height,
+    }}
     {...rest}
   />
 );

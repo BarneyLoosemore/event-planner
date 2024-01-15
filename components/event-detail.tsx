@@ -1,8 +1,4 @@
-import {
-  getAttendeesByEventId,
-  getEventById,
-  isAttendingEvent,
-} from "@/lib/api";
+import type { Event } from "@prisma/client";
 import Image from "next/image";
 import { AttendanceForm } from "./form/attendance-form";
 import { Icon } from "./icon";
@@ -20,24 +16,27 @@ const Detail = ({ content, icon, title }: DetailProps) => (
   </div>
 );
 
-export const EventDetail = async ({ id }: { id: string }) => {
-  const {
-    title,
-    description,
-    location,
-    date,
-    image,
-    creator: host,
-  } = await getEventById(id);
-  const attendees = await getAttendeesByEventId(id);
-  const isAttending = await isAttendingEvent(id);
-  const isPastEvent = new Date(date) < new Date();
+type EventDetailProps = Event & {
+  creator: {
+    name: string;
+  };
+  attendees: string;
+  isAttending: boolean;
+  isPastEvent: boolean;
+};
 
-  const attendeesConcatenated =
-    attendees.length > 0
-      ? attendees.map(({ name }) => name).join(", ")
-      : "No attendees :(";
-
+export const EventDetail = ({
+  id,
+  title,
+  description,
+  location,
+  date,
+  image,
+  creator: host,
+  attendees,
+  isAttending,
+  isPastEvent,
+}: EventDetailProps) => {
   return (
     <section className="m-auto max-w-4xl">
       <div className="mb-4 flex flex-col gap-4 border-b-2 border-b-slate-700 pb-4 sm:mb-6 sm:mt-8 sm:flex-row sm:gap-10 sm:border-0">
@@ -45,8 +44,9 @@ export const EventDetail = async ({ id }: { id: string }) => {
           alt={title}
           src={image!}
           width={600}
-          height={300}
-          className="max-sm:relative max-sm:left-1/2 max-sm:right-1/2 max-sm:z-[-1] max-sm:ml-[-50vw] max-sm:mr-[-50vw] max-sm:w-[100vw] max-sm:max-w-[100vw] sm:rounded-md" // stretch out of the parent container, but only on small screens
+          height={400}
+          priority
+          className="h-[400px] w-[600px] object-cover max-sm:relative max-sm:left-1/2 max-sm:right-1/2 max-sm:z-[-1] max-sm:ml-[-50vw] max-sm:mr-[-50vw] max-sm:w-[100vw] max-sm:max-w-[100vw] sm:rounded-md" // stretch out of the parent container, but only on small screens
         />
         <div>
           <h2 className="text-xl font-semibold sm:text-2xl">{title}</h2>
@@ -62,11 +62,7 @@ export const EventDetail = async ({ id }: { id: string }) => {
 
           <Detail icon="calendar" title="Date" content={date.toDateString()} />
           <Detail icon="location" title="Location" content={location} />
-          <Detail
-            icon="user"
-            title="Attendees"
-            content={attendeesConcatenated}
-          />
+          <Detail icon="user" title="Attendees" content={attendees} />
         </div>
       </div>
       <p>{description}</p>

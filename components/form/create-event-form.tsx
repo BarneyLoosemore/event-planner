@@ -1,77 +1,32 @@
 "use client";
-import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { createEvent } from "@/app/events/create/actions";
+import { useFormState } from "react-dom";
+import { Field } from "./field";
+import { SubmitButton } from "./submit-button";
 
 export const CreateEventForm = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isError, setIsError] = useState(false);
-
-  const router = useRouter();
-
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    try {
-      setIsSubmitting(true);
-      event.preventDefault();
-
-      const response = await fetch("/api/event", {
-        method: "POST",
-        body: new FormData(event.currentTarget),
-      });
-
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-
-      const data = await response.json();
-      router.push(`/events/${data.id}`);
-    } catch (e) {
-      console.warn(e);
-      setIsError(true);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  const currentDate = new Date().toISOString().split("T")[0];
+  const [error, formAction] = useFormState(createEvent, null);
 
   return (
     <form
-      className="flex w-1/3 flex-col gap-4 [&>input]:text-black [&>textarea]:text-black"
-      onSubmit={handleSubmit}
+      action={formAction}
+      className="flex w-full max-w-xs flex-col [&>input]:text-black [&>textarea]:text-black"
     >
-      <label htmlFor="title">Title</label>
-      <input name="title" id="title" required />
-
-      <label htmlFor="description">Description</label>
-      <textarea name="description" id="description" required />
-
-      <label htmlFor="location">Location</label>
-      <input name="location" id="location" required />
-
-      <label htmlFor="date">Date</label>
-      <input name="date" id="date" type="date" required />
-
-      {/* <label htmlFor="image">Image</label>
-      <input
-        name="image"
-        id="image"
-        type="file"
-        accept="image/png, image/jpeg, image/jpg, image/webp"
-        className="!text-white"
-        max="1"
+      <Field label="Title *" name="title" required />
+      <Field label="Description *" name="description" required />
+      <Field label="Location *" name="location" required />
+      <Field
+        label="Date *"
+        name="date"
+        type="date"
+        min={currentDate}
         required
-      /> */}
+      />
+      <Field label="Image" name="image" type="file" accept="image/*" />
+      {error && <p className="mb-2 text-red-800">{error}</p>}
 
-      <button
-        type="submit"
-        className="disabled:cursor-not-allowed disabled:opacity-50"
-        disabled={isSubmitting}
-      >
-        Create
-      </button>
-      {isError && (
-        <p className="text-red-800" role="alert">
-          Something went wrong :(
-        </p>
-      )}
+      <SubmitButton>Create Event</SubmitButton>
     </form>
   );
 };

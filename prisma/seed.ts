@@ -48,7 +48,7 @@ const createEvent = async (user: User) => {
       title,
       image: `https://picsum.photos/id/${Math.floor(
         Math.random() * 50,
-      )}/600/300`,
+      )}/600/400`,
     },
   });
 };

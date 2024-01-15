@@ -3,6 +3,7 @@ import { getSessionCookie } from "@/lib/api";
 import { uploadImageToCloudinary } from "@/lib/cloudinary";
 import prisma from "@/lib/prisma";
 import { eventSchema, imageSchema } from "@/lib/schemas/event";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 const DEFAULT_IMAGE_URL = "https://picsum.photos/id/1/600/300";
@@ -37,5 +38,7 @@ export async function createEvent(_prevState: any, formData: FormData) {
       image: imageUrl,
     },
   });
+
+  revalidatePath("/events");
   redirect("/events");
 }

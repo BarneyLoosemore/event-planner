@@ -1,24 +1,22 @@
 import { EventCardList } from "@/components/event-card-list";
-import prisma from "@/lib/prisma";
-import { Suspense } from "react";
+import { filterAndSearchEvents } from "@/lib/api";
+import { unstable_cache } from "next/cache";
 
-export default async function EventsPage() {
-  const events = await prisma.event.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-    include: {
-      attendees: {
-        include: {
-          attendee: true,
-        },
-      },
-    },
-  });
+// `unstable_cache` to avoid having to use `fetch` to persist to the Data Cache?
+const getCachedEvents = unstable_cache(
+  async (filter?: string, search?: string) =>
+    await filterAndSearchEvents(filter, search),
+  ["events"],
+);
 
-  return (
-    <Suspense fallback={"Loading.."}>
-      <EventCardList events={events} />
-    </Suspense>
-  );
+export default async function EventsPage({
+  searchParams: { filter, search },
+}: {
+  searchParams: {
+    filter?: string;
+    search?: string;
+  };
+}) {
+  const events = await filterAndSearchEvents(filter, search);
+  return <EventCardList events={events} />;
 }
