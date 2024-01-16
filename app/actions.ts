@@ -9,7 +9,7 @@ export async function startSession(_: any, formData: FormData) {
 
   if (userExists) {
     return {
-      error: "User already exists",
+      message: "User already exists",
     };
   }
 

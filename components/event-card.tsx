@@ -15,7 +15,7 @@ const Info = ({ content, icon, title }: InfoProps) => (
   </div>
 );
 
-type EventCardProps = EventWithAttendees & {
+export type EventCardProps = EventWithAttendees & {
   index: number;
 };
 

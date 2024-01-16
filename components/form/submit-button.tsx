@@ -12,7 +12,7 @@ export const SubmitButton = ({
       disabled={pending}
       className={`${
         pending && "cursor-not-allowed hover:bg-slate-700"
-      } mt-2 rounded-sm bg-slate-700 px-4 py-2 text-lg font-semibold text-white  hover:bg-slate-600 disabled:cursor-not-allowed`}
+      } mt-2 rounded-sm bg-slate-700 px-4 py-2 text-lg font-semibold text-white hover:bg-slate-600 disabled:cursor-not-allowed`}
     >
       {children}
     </button>

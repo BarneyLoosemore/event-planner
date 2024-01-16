@@ -25,7 +25,7 @@ export const EventFilters = () => {
     };
 
   return (
-    <ul className="mb-2 flex gap-4">
+    <ul className="mb-2 flex gap-4" aria-label="Filter events">
       {filterTypes.map((filterType) => (
         <li key={filterType}>
           <Link
@@ -40,6 +40,7 @@ export const EventFilters = () => {
                   : "border-b-slate-700"
                 : "border-b-transparent"
             }`}
+            {...(filterType === optimisticFilter && { "aria-current": "page" })} // indicate the active filter
           >
             {filterType}
           </Link>

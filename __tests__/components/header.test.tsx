@@ -10,7 +10,10 @@ describe("<Header>", () => {
 
   it('renders with "Event Planner" in a heading element', () => {
     render(<Header />);
-    const heading = screen.getByRole("heading", { name: "Event Planner" });
+    const heading = screen.getByRole("heading", {
+      level: 1,
+      name: "Eventy 🎉",
+    });
     expect(heading).toBeInTheDocument();
   });
 

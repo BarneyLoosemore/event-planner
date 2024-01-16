@@ -6,7 +6,9 @@ import { SubmitButton } from "./submit-button";
 
 export const CreateEventForm = () => {
   const currentDate = new Date().toISOString().split("T")[0];
-  const [error, formAction] = useFormState(createEvent, null);
+  const [state, formAction] = useFormState(createEvent, {
+    message: "",
+  });
 
   return (
     <form
@@ -24,7 +26,7 @@ export const CreateEventForm = () => {
         required
       />
       <Field label="Image" name="image" type="file" accept="image/*" />
-      {error && <p className="mb-2 text-red-800">{error}</p>}
+      <p className="mb-2 text-red-800">{state?.message}</p>
 
       <SubmitButton>Create Event</SubmitButton>
     </form>

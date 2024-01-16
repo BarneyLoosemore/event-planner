@@ -5,7 +5,9 @@ import { Field } from "./field";
 import { SubmitButton } from "./submit-button";
 
 export const CreateUserForm = () => {
-  const [message, formAction] = useFormState(startSession, null);
+  const [state, formAction] = useFormState(startSession, {
+    message: "",
+  });
   return (
     <form
       action={formAction}
@@ -13,7 +15,9 @@ export const CreateUserForm = () => {
     >
       <Field label="What's your name?" name="name" required />
       <SubmitButton>Submit</SubmitButton>
-      {message && <p className="mx-auto mt-4 text-red-500">{message.error}</p>}
+      <p aria-live="polite" className="mx-auto mt-4 text-red-500">
+        {state?.message}
+      </p>
     </form>
   );
 };

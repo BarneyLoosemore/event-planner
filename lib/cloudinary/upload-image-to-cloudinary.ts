@@ -1,5 +1,5 @@
+import cloudinary from "@/lib/cloudinary/cloudinary";
 import { UploadApiResponse } from "cloudinary";
-import cloudinary from "./cloudinary";
 
 export async function uploadImageToCloudinary(
   image: File,
@@ -8,13 +8,14 @@ export async function uploadImageToCloudinary(
   const base64 = Buffer.from(imageBuffer).toString("base64");
   const fileUri = `data:${image.type};base64,${base64}`;
 
+  console.log(cloudinary.v2.uploader.upload);
+
   return new Promise((resolve, reject) =>
     cloudinary.v2.uploader
       .upload(fileUri, {
         invalidate: true,
       })
       .then((result) => {
-        console.log(result);
         resolve(result);
       })
       .catch((error) => {

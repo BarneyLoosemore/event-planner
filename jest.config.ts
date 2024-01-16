@@ -16,6 +16,9 @@ const config: Config = {
     "@/(.*)": "<rootDir>/$1",
   },
 
+  // disable console warnings
+  // silent: true,
+
   coverageThreshold: {
     global: {
       // branches: 90,
