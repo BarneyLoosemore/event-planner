@@ -1,9 +1,7 @@
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
-import { getSessionCookie, getUserById } from "@/lib/api";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Suspense } from "react";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -18,20 +16,12 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const userId = getSessionCookie();
-  const user = userId ? await getUserById(userId) : null;
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Suspense>
-          <Header user={user} />
-        </Suspense>
-        <Suspense>
-          <main>{children}</main>
-        </Suspense>
-        <Suspense>
-          <Footer />
-        </Suspense>
+        <Header />
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );

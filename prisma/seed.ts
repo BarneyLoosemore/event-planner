@@ -1,12 +1,12 @@
 import { Event, PrismaClient, User } from "@prisma/client";
 const prisma = new PrismaClient();
 
-const EVENT_COUNT = 100;
+const EVENT_COUNT = 40;
 const USER_COUNT = 10;
-const EVENT_ATTENDANCES_COUNT = 100;
+const EVENT_ATTENDANCES_COUNT = 40;
 
 const USER_NAMES = ["Bob", "Barney", "Xavier", "Sola", "Tilly", "Rosa"];
-const DATES = [2021, 2022, 2023, 2024, 1999, 2000, 2001];
+const DATES = [2021, 2022, 2023, 2024, 2001];
 const LOCATIONS = ["London", "Paris", "New York", "Berlin", "Tokyo", "Beijing"];
 const TITLES = [
   "Crazy Event",
@@ -48,7 +48,7 @@ const createEvent = async (user: User) => {
       title,
       image: `https://picsum.photos/id/${Math.floor(
         Math.random() * 50,
-      )}/600/300`,
+      )}/600/400`,
     },
   });
 };

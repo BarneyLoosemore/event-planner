@@ -1,64 +1,35 @@
 import { EventCardList } from "@/components/event-card-list";
-import { Filter } from "@/components/filter";
-import prisma from "@/lib/prisma";
+import { EventFilters } from "@/components/event-filters";
+import { EventSearch } from "@/components/event-search";
 
-const getOpts = (sort?: "asc" | "past") => {
-  const orderBy =
-    sort === "asc" ? { date: "asc" as const } : { createdAt: "desc" as const };
-  const where = {
-    date: {
-      [sort === "past" ? "lt" : "gte"]: new Date(),
-    },
-  };
-  return {
-    orderBy,
-    where,
-    include: {
-      attendees: {
-        include: {
-          attendee: true,
-        },
-      },
-    },
-  };
-};
+// Note: the unstable_cache Data Cache API seems a bit.. well, unstable, so leaving for now
+// const getCachedEvents = unstable_cache(
+//   async (filter?: string, search?: string) =>
+//     await filterAndSearchEvents(filter, search),
+//   ["events"],
+//   {
+//     tags: ["events"],
+//   },
+// );
 
 export default async function EventsPage({
-  searchParams: { sort },
+  searchParams: { filter, search },
 }: {
   searchParams: {
-    sort?: "asc" | "past";
+    filter?: string;
+    search?: string;
   };
 }) {
-  const opts = getOpts(sort);
-  const events = await prisma.event.findMany(opts);
-
   return (
     <>
-      <search className="mb-8 mt-2 flex gap-2">
-        <Filter href="/events" active={!sort}>
-          Newly added
-        </Filter>
-        <Filter
-          href={{
-            pathname: "/events",
-            query: { sort: "asc" },
-          }}
-          active={sort === "asc"}
-        >
-          Upcoming
-        </Filter>
-        <Filter
-          href={{
-            pathname: "/events",
-            query: { sort: "past" },
-          }}
-          active={sort === "past"}
-        >
-          Past
-        </Filter>
+      <search>
+        <EventFilters />
+        <EventSearch />
       </search>
-      <EventCardList events={events} />
+      {/* Note for future Barney: PPR/Streaming via Suspense requires JS, so bit of a prog-enhancement violation, hence commenting this out */}
+      {/* <Suspense fallback={<div>Loading...</div>}> */}
+      <EventCardList filter={filter} search={search} />
+      {/* </Suspense> */}
     </>
   );
 }

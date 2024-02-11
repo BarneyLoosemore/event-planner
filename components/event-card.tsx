@@ -15,7 +15,9 @@ const Info = ({ content, icon, title }: InfoProps) => (
   </div>
 );
 
-type EventCardProps = EventWithAttendees;
+export type EventCardProps = EventWithAttendees & {
+  index: number;
+};
 
 export const EventCard = ({
   title,
@@ -23,20 +25,21 @@ export const EventCard = ({
   location,
   date,
   attendees,
+  index,
 }: EventCardProps) => {
-  const isPastEvent = date < new Date();
+  const lcpImage = index <= 3;
   return (
-    <article
-      className={`${
-        isPastEvent && "opacity-70"
-      } flex flex-col justify-between gap-1 transition-opacity will-change-auto hover:opacity-75`}
-    >
+    <article className="flex flex-col justify-between gap-1 transition-opacity will-change-auto hover:opacity-75">
       <Image
         src={image ?? "https://picsum.photos/id/1"}
         alt={title}
-        width={326}
-        height={163}
-        className="w-full rounded-md"
+        width={300}
+        height={160}
+        loading={lcpImage ? "eager" : "lazy"}
+        priority={lcpImage}
+        quality={lcpImage ? 50 : 25}
+        sizes="100vw, (min-width: 768px) 33vw, (min-width: 1024px) 25vw"
+        className="h-52 w-auto rounded-md object-cover sm:h-44"
       />
       <h2 className="font-medium text-slate-700">{title}</h2>
       <Info icon="calendar" title="Date" content={date.toDateString()} />

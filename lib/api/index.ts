@@ -2,20 +2,14 @@
 import { cookies } from "next/headers";
 import prisma from "../prisma";
 
-export const getEventById = async (id: string) =>
-  (await prisma.event.findUnique({
+export const getEventById = (id: string) =>
+  prisma.event.findUnique({
     where: { id },
     include: {
       creator: true,
-    },
-  }))!;
-
-export const getAttendeesByEventId = async (id: string) =>
-  await prisma.user.findMany({
-    where: {
-      events: {
-        some: {
-          eventId: id,
+      attendees: {
+        include: {
+          attendee: true,
         },
       },
     },
@@ -39,33 +33,45 @@ export const removeAttendee = (attendeeId: string, eventId: string) =>
 
 export const getSessionCookie = () => cookies().get("session")?.value!;
 
-export const isAttendingEvent = async (eventId: string) => {
-  const attendeeId = getSessionCookie();
-  return !!(await prisma.eventAttendance.findFirst({
-    where: {
-      eventId,
-      attendeeId,
-    },
-  }));
-};
-
-export const createUser = async (name: string) =>
-  await prisma.user.create({
+export const createUser = (name: string) =>
+  prisma.user.create({
     data: {
       name,
     },
   });
 
-export const getUserByName = async (name: string) =>
-  await prisma.user.findUnique({
+export const getUserByName = (name: string) =>
+  prisma.user.findUnique({
     where: {
       name,
     },
   });
 
-export const getUserById = async (id: string) =>
-  await prisma.user.findUnique({
+export const filterAndSearchEvents = (
+  filter?: "past" | string,
+  search?: string,
+) =>
+  prisma.event.findMany({
+    orderBy:
+      filter === "past"
+        ? {
+            date: "desc",
+          }
+        : {
+            createdAt: "desc",
+          },
+
     where: {
-      id,
+      title: {
+        contains: search,
+        mode: "insensitive",
+      },
+    },
+    include: {
+      attendees: {
+        include: {
+          attendee: true,
+        },
+      },
     },
   });
