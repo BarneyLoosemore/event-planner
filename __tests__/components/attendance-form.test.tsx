@@ -5,6 +5,7 @@ let mockOptimisticAttending = true;
 jest.mock("react", () => ({
   ...jest.requireActual("react"),
   useOptimistic: () => [mockOptimisticAttending, jest.fn()],
+  useFormState: () => [null, "() => {}"],
 }));
 
 const mockProps = {

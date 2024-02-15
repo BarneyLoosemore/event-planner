@@ -1,7 +1,10 @@
 import { CreateUserForm } from "@/components/form/create-user-form";
 import { fireEvent, render, screen } from "@testing-library/react";
 
-let mockUseFormStateReturn: any[] = [null, () => {}];
+// Invalid value for prop `action` on <form> tag.
+// ignore this warning?
+
+let mockUseFormStateReturn: any[] = [null, "() => {}"];
 let mockUseFormStatusReturn = { pending: false };
 jest.mock("react-dom", () => ({
   ...jest.requireActual("react-dom"),
@@ -30,7 +33,7 @@ describe("<CreateUserForm>", () => {
   });
 
   it("renders an error message if form submission fails", () => {
-    mockUseFormStateReturn = [{ message: "Something went wrong" }, () => {}];
+    mockUseFormStateReturn = [{ message: "Something went wrong" }, "() => {}"];
     render(<CreateUserForm />);
     expect(screen.getByText("Something went wrong")).toBeInTheDocument();
   });
