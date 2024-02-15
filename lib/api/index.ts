@@ -47,6 +47,7 @@ export const getUserByName = (name: string) =>
     },
   });
 
+// TODO: test this!
 export const filterAndSearchEvents = (
   filter?: "past" | string,
   search?: string,

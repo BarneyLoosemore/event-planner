@@ -8,8 +8,6 @@ export async function uploadImageToCloudinary(
   const base64 = Buffer.from(imageBuffer).toString("base64");
   const fileUri = `data:${image.type};base64,${base64}`;
 
-  console.log(cloudinary.v2.uploader.upload);
-
   return new Promise((resolve, reject) =>
     cloudinary.v2.uploader
       .upload(fileUri, {

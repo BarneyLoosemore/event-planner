@@ -9,8 +9,9 @@ import { redirect } from "next/navigation";
 const DEFAULT_IMAGE_URL = "https://picsum.photos/id/1/600/300";
 export async function createEvent(_prevState: any, formData: FormData) {
   const creatorId = getSessionCookie();
+
   if (!creatorId) {
-    redirect("/");
+    return redirect("/");
   }
 
   const { image, ...eventBody } = Object.fromEntries(formData.entries());
