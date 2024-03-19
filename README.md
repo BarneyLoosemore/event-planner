@@ -12,6 +12,4 @@ Creating an event, as well as filtering and searching for events, all work with 
 ## Search functionality
 |JS disabled|JS enabled|
 |--|--|
-|![image](https://github.com/BarneyLoosemore/event-planner/assets/40725451/08bada94-5c48-477f-b6e6-a4a33a6d60ef)|![image](https://github.com/BarneyLoosemore/event-planner/assets/40725451/135662e6-a1bc-425a-95db-e5c9c9439800)|
-
-
+|![disabled](https://github.com/BarneyLoosemore/event-planner/assets/40725451/7f60f00d-7002-4fa7-a6ac-d40cde1decb1)|![enabled](https://github.com/BarneyLoosemore/event-planner/assets/40725451/de060035-b627-4478-872b-59120298b724)|
