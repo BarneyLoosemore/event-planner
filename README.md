@@ -1,8 +1,14 @@
-A Next 14 "event planner" site, with the ability to create, view, filter and search for events. Deployed to Vercal at https://event-planner-three.vercel.app/events
+## NextJS 14 Event Planner 
 
-Next, Typescript, Tailwind
-Prisma, Postgres, Zod
-Jest, React Testing Library, Cypress
+A Next14 "event planner" site, with the ability to create, view, filter and search for events. Deployed to Vercel at https://event-planner-three.vercel.app/events
+
+**FE**: Next, Typescript, Tailwind
+
+**BE/db**: Prisma, Postgres, Zod
+
+**Testing**: Jest, React Testing Library, Cypress
+
+---
 
 This was a chance to try out some of the new React APIs (`useTransition`, `useOptimistic`, `useFormStatus`), as well as see if it's possible to fully embrace _progressive enhancement_ using modern Next. Form actions (server actions) can be 'enhanced' via `useFormState`/`useFormStatus`, and `next/link`'s `Link` component provides a client-router enhancement atop native `<a>` links.
 
